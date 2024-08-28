@@ -30,8 +30,8 @@ class SMSegmentCalculator {
   ///
   /// [message] - The SMS message for which segments are being calculated.
   /// Returns a [Tuple] where:
-  /// - `item1` is the number of segments.
-  /// - `item2` is the total character count.
+  /// - `totalSegments` is the number of segments.
+  /// - `characterCount` is the total character count.
   static Tuple2<int, int> calculateSegments(String message) {
     bool usesUCS2 = message.runes.any((int rune) {
       var character = String.fromCharCode(rune);
