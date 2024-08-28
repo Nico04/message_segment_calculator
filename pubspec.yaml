@@ -1,5 +1,5 @@
 name: message_segment_calculator
-description: "A new Flutter package project."
+description: "Efficiently calculate SMS segments for messages with support for GSM and UCS-2 encoding. Ideal for apps that require precise SMS length and cost management."
 version: 0.0.1
 homepage: https://example.com
 
