@@ -11,29 +11,37 @@ and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/developing-packages).
 -->
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+# SMS Segment Calculator
 
-## Features
+The SMS Segment Calculator is a Dart package designed to help developers accurately calculate the number of SMS segments required for messages, taking into account both GSM and UCS-2 encoding standards. This is essential for applications that involve SMS messaging, where managing the length and cost of messages is crucial.
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+## Key Features
 
-## Getting started
+- **Accurate SMS Segmentation**: Determines how many segments a given SMS message will require based on its content and the necessary encoding (GSM or UCS-2).
+- **Support for Special Characters and Emojis**: Automatically handles texts containing emojis and special characters by switching to UCS-2 encoding when required.
+- **Ease of Integration**: Offers simple, straightforward functions that can be easily integrated into any Dart or Flutter project to enhance SMS functionalities.
+- **Cost-Effective Messaging**: Helps in effectively managing SMS costs by providing precise segment counts for accurate budgeting and planning.
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+## Getting Started
+
+To integrate the SMS Segment Calculator into your Dart or Flutter project, follow these steps:
+
+### Installation
+
+Add the SMS Segment Calculator to your project by including it in your `pubspec.yaml` file:
+
+```yaml
+dependencies:
+  sms_segment_calculator: ^0.1.0
+
 
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
+import 'package:sms_segment_calculator/sms_segment_calculator.dart';
 
-```dart
-const like = 'sample';
-```
+void main() {
+  String message = "Hello, World! 🌍 Sending SMS messages just got easier.";
+  var result = SMSegmentCalculator.calculateSegments(message);
+  print('Total segments: ${result.item1}, Total characters: ${result.item2}');
+}
 
-## Additional information
-
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
