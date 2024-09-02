@@ -1,3 +1,10 @@
+/// A mapping of Unicode characters to their GSM-7 equivalents.
+///
+/// This map helps in determining if a character can be encoded in GSM-7 or
+/// if it requires UCS-2 encoding, by providing a direct lookup from Unicode
+/// code points to GSM-7 encodable values.
+library;
+
 const Map<int, List<int>> unicodeToGsm = {
   0x000a: [0x0a],
   0x000c: [0x1b, 0x0a],

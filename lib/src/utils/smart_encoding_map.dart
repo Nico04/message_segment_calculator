@@ -1,3 +1,8 @@
+/// A map used for smart encoding of characters.
+/// The `smartEncodingMap` maps characters to their encoded equivalents,
+/// providing an optimized representation based on the GSM-7 or UCS-2 encoding standards.
+library;
+
 const Map<String, String> smartEncodingMap = {
   '\u00ab': '"', // LEFT-POINTING DOUBLE ANGLE QUOTATION MARK
   '\u00bb': '"', // RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK
