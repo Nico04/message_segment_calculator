@@ -6,21 +6,28 @@ on:
       - 'v[0-9]+.[0-9]+.[0-9]+*'
 
 jobs:
-  
+
   publish:
     permissions:
       id-token: write # Required for authentication using OIDC
     runs-on: macos-latest
+    environment: production
     steps:
+      - name: Read a variable
+        run: echo "My app id value is ${{ vars.PUB_API_TOKEN}}"
+      - name: Tell me a secret 
+        run: echo "My existing secret is ${{ secrets.PUB_API_TOKEN}}"
       - uses: actions/checkout@v3
       - uses: dart-lang/setup-dart@v1
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.22.3'  # You can specify a version like '3.0.0' if needed
-          environment: pub.dev
+          
       - name: Restore pub credentials
         run: echo "${{ secrets.PUB_API_TOKEN }}"
+       
+           
       # Here you can insert custom steps you need
       # - run: dart tool/generate-code.dart
       - name: Publish
