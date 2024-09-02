@@ -3,7 +3,7 @@
 * TODO: Describe initial release.
 
 
-## 0.0.6
+## 0.0.7
 
 ### Added
 - Added the `SegmentedMessage` class to handle the segmentation logic for dividing a message into multiple SMS segments.
