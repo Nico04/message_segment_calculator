@@ -18,7 +18,7 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.22.3'  # You can specify a version like '3.0.0' if needed
-
+          environment: pub.dev
       - name: Restore pub credentials
         run: echo "${{ secrets.PUB_API_TOKEN }}"
       # Here you can insert custom steps you need
