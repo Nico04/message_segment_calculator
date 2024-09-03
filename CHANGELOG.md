@@ -17,7 +17,7 @@
 - Improved error handling in the main entry point for better debugging and usability.
 - Updated the README with detailed descriptions and usage examples.
 
-###  1.0.7
+##  1.0.7
 
 ### Changed 
 - Code format and refractor
