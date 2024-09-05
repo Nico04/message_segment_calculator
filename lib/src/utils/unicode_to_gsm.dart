@@ -3,7 +3,8 @@
 /// This map helps in determining if a character can be encoded in GSM-7 or
 /// if it requires UCS-2 encoding, by providing a direct lookup from Unicode
 /// code points to GSM-7 encodable values.
-library;
+
+// ignore_for_file: dangling_library_doc_comments
 
 const Map<int, List<int>> unicodeToGsm = {
   0x000a: [0x0a],
