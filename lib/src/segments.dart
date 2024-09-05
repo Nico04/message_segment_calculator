@@ -33,16 +33,14 @@ class Segment {
     return _elements.fold(
         0,
         (int total, dynamic el) =>
-            total +
-            (el is EncodedChar
-                ? el.sizeInBits()
-                : (el as UserDataHeader).sizeInBits()));
+            total + (el is EncodedChar ? el.sizeInBits() : 0));
   }
 
   /// Computes the size in bits of the message content only, excluding user data headers.
-  int messageSizeInBits() => _elements
-      .whereType<EncodedChar>()
-      .fold(0, (int total, EncodedChar el) => total + el.sizeInBits());
+  int messageSizeInBits() => _elements.whereType<EncodedChar>().fold(
+      0,
+      (int total, var el) =>
+          total + (el is! UserDataHeader ? el.sizeInBits() : 0));
 
   /// Calculates the remaining free space in bits within this segment.
   int freeSizeInBits() {
@@ -62,19 +60,22 @@ class Segment {
     hasTwilioReservedBits = true;
 
     /// Indicate that Twilio reserved bits are used.
-    hasUserDataHeader = true; // Indicate that a user data header is now added.
+    hasUserDataHeader = false; // Indicate that a user data header is now added.
     for (int i = 0; i < 6; i++) {
       /// Add 6 user data headers at the start of the segment.
       _elements.insert(0, UserDataHeader());
     }
 
     /// Remove elements until there is enough free space in the segment.
-    while (freeSizeInBits() < 0 && _elements.isNotEmpty) {
-      var removed = _elements.removeLast();
-      if (removed is EncodedChar) {
-        leftOverChar.insert(
-            0, removed); // Add removed encoded chars to the leftover list.
-      }
+    // while (freeSizeInBits() < 0 && _elements.isNotEmpty) {
+    //   var removed = _elements.removeLast();
+    //   if (removed is EncodedChar) {
+    //     leftOverChar.insert(
+    //         0, removed); // Add removed encoded chars to the leftover list.
+    //   }
+    // }
+    while (freeSizeInBits() < 0) {
+      leftOverChar.insert(0, removeLast());
     }
     return leftOverChar; // Return any leftover characters that could not fit after adding headers.
   }

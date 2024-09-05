@@ -12,7 +12,7 @@ void main() {
 
       expect(segmentedMessage.segmentsCount, 1);
       expect(segmentedMessage.totalSize, lessThanOrEqualTo(1120)); // 1 segment
-      expect(segmentedMessage.encodingName, SmsEncoding.gsm7);
+      expect(segmentedMessage.encoding, SmsEncoding.gsm7);
     });
 
     test('Calculates correct segments for a message with emojis', () {
@@ -20,14 +20,14 @@ void main() {
       SegmentedMessage segmentedMessage = SegmentedMessage(message);
 
       expect(segmentedMessage.segmentsCount, greaterThanOrEqualTo(1));
-      expect(segmentedMessage.encodingName, SmsEncoding.ucs2);
+      expect(segmentedMessage.encoding, SmsEncoding.ucs2);
     });
 
     test('Handles UCS-2 encoding for special characters', () {
       String message = 'こんにちは世界'; // Japanese for "Hello, World"
       SegmentedMessage segmentedMessage = SegmentedMessage(message);
 
-      expect(segmentedMessage.encodingName, SmsEncoding.ucs2);
+      expect(segmentedMessage.encoding, SmsEncoding.ucs2);
       expect(segmentedMessage.segmentsCount, greaterThanOrEqualTo(1));
     });
 
