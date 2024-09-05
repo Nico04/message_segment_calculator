@@ -1,7 +1,24 @@
-## 0.0.1
+## 1.0.9
 
-* TODO: Describe initial release.
+### Changed 
+- fix : removed unused functions
+- fix : removed unused variables
+- fix : removed unused imports
+- fix : Code format and refractor 
 
+
+## 1.0.8
+
+### Changed 
+- fix : segment calculation logics
+- improved usability
+- fix : encoding logic
+- Updated the README with detailed descriptions and usage examples.
+
+##  1.0.7
+
+### Changed 
+- Code format and refractor
 
 ## 0.0.7
 
@@ -17,15 +34,11 @@
 - Improved error handling in the main entry point for better debugging and usability.
 - Updated the README with detailed descriptions and usage examples.
 
-##  1.0.7
 
-### Changed 
-- Code format and refractor
+## 0.0.1
 
-## 1.0.8
+* TODO: Describe initial release.
 
-### Changed 
-- fix : segment calculation logics
-- improved usability
-- fix : encoding logic
-- Updated the README with detailed descriptions and usage examples.
+
+
+

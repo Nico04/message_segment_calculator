@@ -163,18 +163,6 @@ class SegmentedMessage {
     return encodedChars;
   }
 
-  /// Determines the encoding for the entire message.
-  ///
-  /// [encodedChars] : List of encoded characters.
-  ///
-  /// Returns the encoding type (GSM-7 or UCS-2).
-  SmsEncoding _determineEncoding(List<EncodedChar> encodedChars) {
-    /// If any character is not GSM-7, use UCS-2 encoding for the entire message
-    bool hasNonGSMCharacter =
-        encodedChars.any((encodedChar) => !(encodedChar.isGSM7 ?? false));
-    return hasNonGSMCharacter ? SmsEncoding.ucs2 : SmsEncoding.gsm7;
-  }
-
   /// Builds segments for the message by distributing characters into SMS segments.
   ///
   /// [encodedChars] : List of encoded characters.
