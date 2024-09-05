@@ -1,78 +1,66 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-// import '../message_segment_calculator.dart';
-
-// // Updated EncodedChar class
-// class EncodedChar {
-//   String? raw; // Raw character (grapheme)
-//   List<int>? codeUnits; // Encoded representation of the character
-//   bool? isGSM7; // True if character is GSM7, false otherwise
-//   String? encoding; // Encoding type, either 'GSM-7' or 'UCS-2'
-
-//   EncodedChar(String char, this.encoding) : raw = char {
-//     // Determine if the character is GSM7
-//     isGSM7 = char.isNotEmpty &&
-//         char.length == 1 &&
-//         unicodeToGsm.containsKey(char.codeUnitAt(0));
-
-//     // If any character is not GSM7, mark the entire encoding as UCS-2
-//     if (!(isGSM7 ?? false)) {
-//       encoding = 'UCS-2';
-//     }
-
-//     // Assign code units based on encoding
-//     if (encoding == 'GSM-7' && (isGSM7 ?? false)) {
-//       // For GSM-7 characters, use the mapped code units
-//       codeUnits = List<int>.from(unicodeToGsm[char.codeUnitAt(0)]!);
-//     } else {
-//       // For UCS-2 encoding or non-GSM-7 characters
-//       codeUnits = char.runes.map((rune) => rune).toList();
-//     }
-//   }
-
-//   // Returns the size of a single code unit in bits
-//   int codeUnitSizeInBits() {
-//     return encoding == 'GSM-7' ? 7 : 16; // 7 bits for GSM-7, 16 bits for UCS-2
-//   }
-
-//   // Calculates the total size in bits of the encoded character
-//   int sizeInBits() {
-//     return codeUnits!.length * codeUnitSizeInBits();
-//   }
-// }
-
+// Import statements for necessary dependencies
 import 'package:message_segment_calculator/message_segment_calculator.dart';
 import 'package:message_segment_calculator/src/utils/on_string.dart';
 
+// =============================================================================
+// CLASS: EncodedChar
+// PURPOSE: Represents a character with its encoded representation based on
+// different encoding types (GSM-7 or UCS-2). Provides utility methods to
+// calculate the size of encoded characters in bits.
+// =============================================================================
 class EncodedChar {
-  String? raw;
-  List<int>? codeUnits;
-  bool? isGSM7;
-  String? encoding;
+  String? raw; // Raw character (grapheme)
+  List<int>? codeUnits; // Encoded representation of the character
+  bool? isGSM7; // True if the character is GSM7, false otherwise
+  String? encoding; // Encoding type, either 'GSM-7' or 'UCS-2'
+
+  /// Constructor for the EncodedChar class.
+  /// Initializes the raw character, determines its encoding type, and sets its code units.
+  ///
+  /// [char] : The character to be encoded.
+  /// [encodingName] : The encoding type name ('GSM-7' or 'UCS-2').
   EncodedChar(String? char, String encodingName) {
-    raw = char;
-    encoding = encodingName;
+    raw = char; // Initialize the raw character
+    encoding = encodingName; // Set the encoding type
+
+    // Determine if the character is GSM7
     isGSM7 = ((char.notNullNorEmpty) &&
         (char?.length == 1) &&
         unicodeToGsm.containsKey(char?.codeUnitAt(0)));
+
+    // Assign code units based on whether the character is GSM7 or not
     if (isGSM7 ?? false) {
-      codeUnits = unicodeToGsm[char?.codeUnitAt(0)];
+      codeUnits =
+          unicodeToGsm[char?.codeUnitAt(0)]; // Use mapped code units for GSM7
     } else {
-      codeUnits = [];
+      codeUnits = []; // For non-GSM7 characters, initialize an empty list
       for (var i = 0; i < char!.length; i++) {
-        codeUnits?.add(char.codeUnitAt(i));
+        codeUnits?.add(char.codeUnitAt(i)); // Add UCS-2 code units
       }
     }
   }
 
+  /// Returns the size of a single code unit in bits.
+  ///
+  /// Returns:
+  /// - 7 bits for 'gsm7' encoding.
+  /// - 8 bits for other encodings.
   int codeUnitSizeInBits() {
-    return encoding == 'gsm7' ? 7 : 8;
+    return encoding == 'gsm7' ? 7 : 8; // 7 bits for GSM-7, 8 bits for others
   }
 
+  /// Calculates the total size in bits of the encoded character.
+  ///
+  /// Returns:
+  /// - 16 bits if the encoding is 'ucs2' and the character is GSM7.
+  /// - Otherwise, calculates bits based on encoding type.
   int sizeInBits() {
     if (encoding == 'ucs2' && (isGSM7 ?? false)) {
-      return 16;
+      return 16; // UCS-2 encoding, size is 16 bits
     }
-    final bitsPerUnits = encoding == 'gsm7' ? 7 : 16;
-    return bitsPerUnits * codeUnits!.length;
+    final bitsPerUnits =
+        encoding == 'gsm7' ? 7 : 16; // Bits per unit depending on encoding
+    return bitsPerUnits * codeUnits!.length; // Total size in bits
   }
 }

@@ -35,24 +35,80 @@ dependencies:
 
 ## Usage
 
-import 'package:sms_segment_calculator/sms_segment_calculator.dart';
+import 'package:flutter/material.dart';
+import 'package:message_segment_calculator/src/segmented_message.dart';
 
 void main() {
-  String message = '''Hi Roberta,
-It's Peter with Krown Funding touching base.
-It's not too late to get funded before the weekend 🤑.
-Reply Yes to Get Funded Today or DND to opt-out.''';
-
-  // Initialize the SegmentedMessage class to calculate SMS segments.
-  SegmentedMessage segmentedMessage = SegmentedMessage(message);
-
-  // Output various properties of the segmented message.
-  print("Total Size in Bits: ${segmentedMessage.totalSize}");
-  print("Message Size in Bits: ${segmentedMessage.messageSize}");
-  print("Segments Count: ${segmentedMessage.segmentsCount}");
-  print("Number of Characters: ${segmentedMessage.numberOfCharacters}");
-  print("Number of Unicode Scalars: ${segmentedMessage.numberOfUnicodeScalars}");
+  runApp(const App());
 }
+
+/// The root widget of the application.
+class App extends StatelessWidget {
+  const App({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      home: MessageSegmentCalculatorWidget(),
+    );
+  }
+}
+
+/// A stateful widget that provides a UI for calculating message segments.
+class MessageSegmentCalculatorWidget extends StatefulWidget {
+  const MessageSegmentCalculatorWidget({super.key});
+
+  @override
+  State<MessageSegmentCalculatorWidget> createState() =>
+      _MessageSegmentCalculatorWidgetState();
+}
+
+/// The state class for [MessageSegmentCalculatorWidget].
+class _MessageSegmentCalculatorWidgetState
+    extends State<MessageSegmentCalculatorWidget> {
+  final textEditingController = TextEditingController();
+  SegmentedMessage? segmentedMessage;
+
+  @override
+  void dispose() {
+    textEditingController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Message Segment Calculator'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Column(
+          children: [
+            const Text('Enter text'),
+            const SizedBox(height: 10),
+            TextFormField(
+              decoration: const InputDecoration(),
+              controller: textEditingController,
+              onChanged: (value) {
+                setState(() {
+                  segmentedMessage = SegmentedMessage(value);
+                });
+              },
+            ),
+            const SizedBox(height: 10),
+            Text('Number of characters: ${segmentedMessage?.numberOfCharacters}'),
+            Text('Number of segments: ${segmentedMessage?.segmentsCount}'),
+            Text('Number of Unicode scalars: ${segmentedMessage?.numberOfUnicodeScalars}'),
+            Text('Message size in bits: ${segmentedMessage?.messageSize}'),
+            Text('Total size in bits: ${segmentedMessage?.totalSize}'),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 
 
 

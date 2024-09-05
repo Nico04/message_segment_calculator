@@ -21,3 +21,11 @@
 
 ### Changed 
 - Code format and refractor
+
+## 1.0.8
+
+### Changed 
+- fix : segment calculation logics
+- improved usability
+- fix : encoding logic
+- Updated the README with detailed descriptions and usage examples.
