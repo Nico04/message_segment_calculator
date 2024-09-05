@@ -1,3 +1,8 @@
+##1.0.10
+
+## changed
+- fix : importing issue fixed
+
 ## 1.0.9
 
 ### Changed 
