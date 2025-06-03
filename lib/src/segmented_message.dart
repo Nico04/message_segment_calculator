@@ -2,7 +2,7 @@ import 'package:grapheme_splitter/grapheme_splitter.dart';
 import 'package:message_segment_calculator/message_segment_calculator.dart';
 
 import 'segment_element.dart';
-import 'segments.dart';
+import 'segment.dart';
 
 /// =============================================================================
 /// ENUM: SmsEncoding
