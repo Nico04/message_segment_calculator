@@ -1,6 +1,6 @@
 import 'package:grapheme_splitter/grapheme_splitter.dart';
 import 'package:message_segment_calculator/message_segment_calculator.dart';
-import 'package:message_segment_calculator/src/enchoded_char.dart';
+import 'package:message_segment_calculator/src/encoded_char.dart';
 
 import 'segments.dart';
 

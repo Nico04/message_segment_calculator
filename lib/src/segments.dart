@@ -1,4 +1,4 @@
-import 'enchoded_char.dart';
+import 'encoded_char.dart';
 import 'user_data_header.dart'; // Importing the UserDataHeader class.
 
 /// Represents a segment of an SMS message.
