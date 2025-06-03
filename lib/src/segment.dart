@@ -66,7 +66,7 @@ class Segment {
     }
     final leftOverChar = <EncodedChar>[];
     hasTwilioReservedBits = true; // Indicate that Twilio reserved bits are used.
-    hasUserDataHeader = false; // Indicate that a user data header is now added.
+    hasUserDataHeader = true; // Indicate that a user data header is now added.
 
     // Add 6 user data headers at the start of the segment.
     for (int i = 0; i < 6; i++) {
