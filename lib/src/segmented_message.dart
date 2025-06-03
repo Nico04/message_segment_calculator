@@ -119,7 +119,7 @@ class SegmentedMessage {
       encoding = _hasAnyUCSCharacters(graphemes) ? SmsEncoding.ucs2 : SmsEncoding.gsm7;
     } else {
       if (encodingMode == SmsEncodingMode.gsm7 && _hasAnyUCSCharacters(graphemes)) {
-        throw ('The string provided is incompatible with GSM-7 encoding');
+        throw Exception('The string provided is incompatible with GSM-7 encoding');
       }
       encoding = switch(encodingMode) {
         SmsEncodingMode.gsm7 => SmsEncoding.gsm7,
