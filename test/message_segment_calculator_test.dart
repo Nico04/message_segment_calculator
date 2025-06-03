@@ -34,7 +34,7 @@ void main() {
       String message = 'Hello 😊!';
 
       expect(
-        () => SegmentedMessage(message, SmsEncoding.gsm7),
+        () => SegmentedMessage(message, SmsEncodingMode.gsm7),
         throwsException,
       );
     });
@@ -59,7 +59,7 @@ void main() {
 
   group('EncodedChar Tests', () {
     test('Creates EncodedChar correctly for GSM-7 character', () {
-      EncodedChar encodedChar = EncodedChar('A', 'GSM-7');
+      EncodedChar encodedChar = EncodedChar('A', SmsEncoding.gsm7);
 
       expect(encodedChar.isGSM7, true);
       expect(encodedChar.codeUnits?.length, 1);
@@ -67,7 +67,7 @@ void main() {
     });
 
     test('Creates EncodedChar correctly for UCS-2 character', () {
-      EncodedChar encodedChar = EncodedChar('😊', 'UCS-2');
+      EncodedChar encodedChar = EncodedChar('😊', SmsEncoding.ucs2);
 
       expect(encodedChar.isGSM7, false);
       expect(encodedChar.codeUnits?.length, greaterThanOrEqualTo(1));
@@ -78,7 +78,7 @@ void main() {
   group('Segment Tests', () {
     test('Calculates free size correctly after adding characters', () {
       Segment segment = Segment();
-      EncodedChar char = EncodedChar('A', 'GSM-7');
+      EncodedChar char = EncodedChar('A', SmsEncoding.gsm7);
       segment.add(char);
 
       expect(segment.freeSizeInBits(), lessThan(1120));
@@ -86,7 +86,7 @@ void main() {
 
     test('Adds headers correctly and manages overflow', () {
       Segment segment = Segment();
-      EncodedChar char = EncodedChar('A', 'GSM-7');
+      EncodedChar char = EncodedChar('A', SmsEncoding.gsm7);
       segment.add(char);
       List<EncodedChar> overflow = segment.addHeader();
 
