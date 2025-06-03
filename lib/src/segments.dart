@@ -98,4 +98,7 @@ class Segment {
   dynamic removeLast() {
     return _elements.removeLast();
   }
+
+  @override
+  String toString() => 'Segment{hasTwilioReservedBits: $hasTwilioReservedBits, hasUserDataHeader: $hasUserDataHeader, sizeInBits: ${sizeInBits()}, messageSizeInBits: ${messageSizeInBits()}, freeSizeInBits: ${freeSizeInBits()}}';
 }
