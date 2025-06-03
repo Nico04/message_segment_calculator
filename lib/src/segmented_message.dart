@@ -1,7 +1,7 @@
 import 'package:grapheme_splitter/grapheme_splitter.dart';
 import 'package:message_segment_calculator/message_segment_calculator.dart';
-import 'package:message_segment_calculator/src/encoded_char.dart';
 
+import 'segment_element.dart';
 import 'segments.dart';
 
 /// =============================================================================
@@ -85,9 +85,7 @@ class SegmentedMessage {
   /// [message] : The message content to be segmented and encoded.
   /// [encoding] : The desired encoding format (defaults to auto-detection).
   /// [smartEncoding] : Whether to use smart encoding for character replacement.
-  SegmentedMessage(String message,
-      [SmsEncoding encoding = SmsEncoding.auto, bool smartEncoding = false])
-      : encoding = encoding {
+  SegmentedMessage(String message, [this.encoding = SmsEncoding.auto, bool smartEncoding = false]) {
     GraphemeSplitter splitter = GraphemeSplitter();
 
     // Check if the specified encoding is valid

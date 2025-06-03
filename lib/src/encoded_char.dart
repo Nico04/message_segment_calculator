@@ -1,7 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-// Import statements for necessary dependencies
-import 'package:message_segment_calculator/message_segment_calculator.dart';
-import 'package:message_segment_calculator/src/utils/on_string.dart';
+
+part of 'segment_element.dart';
 
 // =============================================================================
 // CLASS: EncodedChar
@@ -9,7 +8,7 @@ import 'package:message_segment_calculator/src/utils/on_string.dart';
 // different encoding types (GSM-7 or UCS-2). Provides utility methods to
 // calculate the size of encoded characters in bits.
 // =============================================================================
-class EncodedChar {
+class EncodedChar extends SegmentElement {
   String? raw; // Raw character (grapheme)
   List<int>? codeUnits; // Encoded representation of the character
   bool? isGSM7; // True if the character is GSM7, false otherwise
@@ -46,21 +45,20 @@ class EncodedChar {
   /// Returns:
   /// - 7 bits for 'gsm7' encoding.
   /// - 8 bits for other encodings.
-  int codeUnitSizeInBits() {
-    return encoding == 'gsm7' ? 7 : 8; // 7 bits for GSM-7, 8 bits for others
-  }
+  @override
+  int codeUnitSizeInBits() => encoding == 'gsm7' ? 7 : 8;
 
   /// Calculates the total size in bits of the encoded character.
   ///
   /// Returns:
   /// - 16 bits if the encoding is 'ucs2' and the character is GSM7.
   /// - Otherwise, calculates bits based on encoding type.
+  @override
   int sizeInBits() {
     if (encoding == 'ucs2' && (isGSM7 ?? false)) {
       return 16; // UCS-2 encoding, size is 16 bits
     }
-    final bitsPerUnits =
-        encoding == 'gsm7' ? 7 : 16; // Bits per unit depending on encoding
+    final bitsPerUnits = encoding == 'gsm7' ? 7 : 16; // Bits per unit depending on encoding
     return bitsPerUnits * codeUnits!.length; // Total size in bits
   }
 }

@@ -1,8 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:message_segment_calculator/src/encoded_char.dart';
+import 'package:message_segment_calculator/src/segment_element.dart';
 import 'package:message_segment_calculator/src/segmented_message.dart';
 import 'package:message_segment_calculator/src/segments.dart';
-import 'package:message_segment_calculator/src/user_data_header.dart';
 
 void main() {
   group('SegmentedMessage Tests', () {
