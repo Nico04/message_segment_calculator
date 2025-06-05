@@ -1,4 +1,4 @@
-import 'package:grapheme_splitter/grapheme_splitter.dart';
+import 'package:characters/characters.dart';
 import 'package:message_segment_calculator/message_segment_calculator.dart';
 
 import 'segment_element.dart';
@@ -89,8 +89,6 @@ class SegmentedMessage {
   /// [encodingMode] : The desired encoding format (defaults to auto-detection).
   /// [smartEncoding] : Whether to use smart encoding for character replacement.
   SegmentedMessage(String message, [this.encodingMode = SmsEncodingMode.auto, bool smartEncoding = false]) {
-    final splitter = GraphemeSplitter();
-
     // Apply smart encoding if enabled
     if (smartEncoding) {
       message = message
@@ -101,8 +99,7 @@ class SegmentedMessage {
     }
 
     /// Split message into graphemes and process line breaks
-    graphemes = splitter.splitGraphemes(message).fold<List<String>>([],
-        (List<String> accumulator, String grapheme) {
+    graphemes = message.characters.fold<List<String>>([], (List<String> accumulator, String grapheme) {
       if (grapheme == '\r\n') {
         accumulator.addAll(grapheme.split('')); // Separate '\r\n' characters
       } else {
@@ -284,18 +281,6 @@ class SegmentedMessage {
   /// [graphemes] : List of graphemes in the message.
   ///
   /// Returns true if any character requires UCS-2 encoding, otherwise false.
-  bool _hasAnyUCSCharacters(List<String> graphemes) {
-    bool result = false;
-
-    for (String grapheme in graphemes) {
-      if (grapheme.length >= 2 ||
-          (grapheme.length == 1 &&
-              !unicodeToGsm.containsKey(grapheme.codeUnitAt(0)))) {
-        result = true;
-        break;
-      }
-    }
-
-    return result;
-  }
+  bool _hasAnyUCSCharacters(List<String> graphemes) =>
+      graphemes.any((grapheme) => grapheme.length >= 2 || (grapheme.length == 1 && !unicodeToGsm.containsKey(grapheme.codeUnitAt(0))));
 }
