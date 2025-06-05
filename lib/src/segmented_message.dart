@@ -91,27 +91,16 @@ class SegmentedMessage {
   SegmentedMessage(String message, [this.encodingMode = SmsEncodingMode.auto, bool smartEncoding = false]) {
     // Apply smart encoding if enabled
     if (smartEncoding) {
-      message = message
-          .split('')
-          .map((char) =>
-              smartEncodingMap[char] ?? char) // Fallback to original character
-          .join('');
+      message = message.split('').map((char) => smartEncodingMap[char] ?? char).join('');
     }
 
-    /// Split message into graphemes and process line breaks
-    graphemes = message.characters.fold<List<String>>([], (List<String> accumulator, String grapheme) {
-      if (grapheme == '\r\n') {
-        accumulator.addAll(grapheme.split('')); // Separate '\r\n' characters
-      } else {
-        accumulator.add(grapheme); // Add the grapheme as is
-      }
-      return accumulator;
-    });
+    // Split message into graphemes and process line breaks
+    graphemes = message.characters.expand((grapheme) => grapheme == '\r\n' ? grapheme.split('') : [grapheme]).toList(growable: false);
 
-    /// Count the number of Unicode scalars in the message
+    // Count the number of Unicode scalars in the message
     numberOfUnicodeScalars = message.runes.length;
 
-    /// Determine the encoding type for the message
+    // Determine the encoding type for the message
     if (encodingMode == SmsEncodingMode.auto) {
       encoding = _hasAnyUCSCharacters(graphemes) ? SmsEncoding.ucs2 : SmsEncoding.gsm7;
     } else {
@@ -125,21 +114,21 @@ class SegmentedMessage {
       };
     }
 
-    /// Encode the characters based on the determined encoding
+    // Encode the characters based on the determined encoding
     encodedChars = _encodeChars(graphemes, encoding);
 
-    /// Count the number of characters based on encoding
+    // Count the number of characters based on encoding
     numberOfCharacters = encoding == SmsEncoding.ucs2
         ? graphemes.length
         : _countCodeUnits(encodedChars);
 
-    /// Build segments from encoded characters
+    // Build segments from encoded characters
     segments = _buildSegments(encodedChars);
 
-    /// Detect the line break style in the message
+    // Detect the line break style in the message
     lineBreakStyle = _detectLineBreakStyle(message);
 
-    /// Check for any warnings in the message content
+    // Check for any warnings in the message content
     warnings = _checkForWarnings(lineBreakStyle);
   }
 
